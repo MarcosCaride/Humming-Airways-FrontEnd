@@ -145,9 +145,3 @@ function App() {
     </div>
   );
 }
-
-📚 Recursos Adicionales
-Documentación oficial de Next.js sobre "use client"
-React useState Hook
-React useEffect Hook
-
