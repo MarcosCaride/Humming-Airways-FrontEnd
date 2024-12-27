@@ -43,7 +43,7 @@ Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/bui
 - Next.js versión: 15.1.3
 - React Icons
 
-> [!IMPORTANT] ¿Qué es "use client"?
+> > :memo: **Note:** ¿Qué es "use client"?
 >"use client" es una directiva de Next.js 13+ que permite indicar que un componente debe renderizarse en el cliente (navegador) en lugar de en el servidor.
 >💡 ¿Por qué es importante aquí?
 >En este componente:
