@@ -43,7 +43,7 @@ Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/bui
 - Next.js versión: 15.1.3
 - React Icons
 
-> > :memo: **Note:** ¿Qué es "use client"?
+ > :memo: **Note:** ¿Qué es "use client"?
 >"use client" es una directiva de Next.js 13+ que permite indicar que un componente debe renderizarse en el cliente (navegador) en lugar de en el servidor.
 >💡 ¿Por qué es importante aquí?
 >En este componente:
@@ -67,18 +67,17 @@ Visibilidad de Formularios:
 Muestra u oculta los formularios de reserva y tipo de viaje.
 Tipo de Viaje:
 Cambia dinámicamente entre las opciones "Ida" y "Ida y Vuelta" al hacer clic en los botones correspondientes.
-javascript
-Copiar código
-useEffect(() => {
-    let formulario = document.getElementById('FormularioReserva');
-    let formularioTipoDeViaje = document.getElementById('FormularioTipoDeViaje');
+>[!TIP]
+>useEffect(() => {
+    >let formulario = document.getElementById('FormularioReserva');
+    >let formularioTipoDeViaje = document.getElementById('FormularioTipoDeViaje');
 
-    if (formularioReservaVisible) {
+    >if (formularioReservaVisible) {
         formulario.classList.remove('invisible');
-    } else {
+    >} else {
         formulario.classList.add('invisible');
-    }
-}, [formularioReservaVisible]);
+    >}
+>}, [formularioReservaVisible]);
 
 ¡Claro! Aquí tienes un ejemplo de README.md para tu componente Navbar, explicando la importancia de "use client" y otros puntos clave. 🚀📚
 
@@ -102,9 +101,8 @@ useState: Maneja los estados formularioReservaVisible, formularioTipoDeViajeVisi
 useEffect: Manipula el DOM directamente con document.getElementById.
 Estas funcionalidades solo funcionan en el lado del cliente, ya que los hooks y la manipulación del DOM no son compatibles con el renderizado en el servidor.
 
+>[!TIP]
 ✅ Uso correcto:
-javascript
-Copiar código
 'use client';
 import React, { useEffect, useState } from 'react';
 🧠 Estados Principales
@@ -118,36 +116,31 @@ Visibilidad de Formularios:
 Muestra u oculta los formularios de reserva y tipo de viaje.
 Tipo de Viaje:
 Cambia dinámicamente entre las opciones "Ida" y "Ida y Vuelta" al hacer clic en los botones correspondientes.
-javascript
-Copiar código
-useEffect(() => {
-    let formulario = document.getElementById('FormularioReserva');
-    let formularioTipoDeViaje = document.getElementById('FormularioTipoDeViaje');
 
-    if (formularioReservaVisible) {
-        formulario.classList.remove('invisible');
-    } else {
-        formulario.classList.add('invisible');
-    }
-}, [formularioReservaVisible]);
+>[!TIP]
+>useEffect(() => {
+    >let formulario = document.getElementById('FormularioReserva');
+    >let formularioTipoDeViaje = document.getElementById('FormularioTipoDeViaje');
+
+    >if (formularioReservaVisible) {
+        >formulario.classList.remove('invisible');
+    >} else {
+        >formulario.classList.add('invisible');
+    >}
+>}, [formularioReservaVisible]);
 
 🧑‍💻 Uso del Componente
 En cualquier archivo React, importa y utiliza el componente:
 
-javascript
-Copiar código
-import Navbar from './components/Navbar';
+>[!TIP]
+>import Navbar from './components/Navbar';
 
-function App() {
-  return (
-    <div>
-      <Navbar />
-    </div>
-  );
-}
+>function App() {
+  >return (
+    ><div>
+      ><Navbar />
+    ></div>
+  >);
+>}
 
-📚 Recursos Adicionales
-Documentación oficial de Next.js sobre "use client"
-React useState Hook
-React useEffect Hook
 
