@@ -1,4 +1,4 @@
-#Desktop{
+#Desktop {
     font-family: 'Open Sans', 'Open Sans Fallback';
     display: flex;
     justify-content: space-between;
@@ -8,7 +8,7 @@
     border-bottom: 2px solid #CDD0D5;
     padding: 0.5% 1.5%;
 
-    button{
+    button {
         height: fit-content;
         font-size: medium;
         padding: .5rem;
@@ -17,24 +17,28 @@
         border: none;
         font-family: 'Open Sans', 'Open Sans Fallback';
         font-weight: 500;
+        cursor: pointer;
     }
 
-    .izquierda{
+    .izquierda {
         display: flex;
         justify-content: space-around;
         width: 50%;
         height: 10%;
-        img{
+
+        img {
             width: 50%;
             height: 30%;
             border-right: 3px solid #595959;
         }
-        div{
+
+        div {
             display: flex;
             width: 50%;
             justify-content: space-evenly;
             align-items: center;
-            .Boton2{
+
+            .Boton2 {
                 background-color: #ffff;
                 color: black;
             }
@@ -54,27 +58,30 @@
         position: absolute;
         top: 10.4%;
 
-        .formArriba{
+        .formArriba {
             display: flex;
             flex-wrap: nowrap;
             width: 100%;
             justify-content: flex-start;
             cursor: pointer;
             color: black;
-            #TipoDeViaje{
+
+            #TipoDeViaje {
                 display: flex;
                 flex-wrap: nowrap;
                 justify-content: space-evenly;
                 align-items: center;
                 width: 15%;
-                #opcionTipoDeViaje{
+
+                #opcionTipoDeViaje {
                     width: 65%;
                 }
             }
+
         }
     }
 
-    .dadoVuelta{
+    .dadoVuelta {
         transform: rotate(-180deg);
         transition: 0.5s;
     }
@@ -87,8 +94,8 @@
         height: 100vh;
         background-color: rgba(0, 0, 0, .60);
         z-index: 1000;
-        color: white;
-        #select{
+
+        #select {
             position: absolute;
             top: 13.5%;
             left: 11.5%;
@@ -98,44 +105,44 @@
             background-color: white;
             opacity: 1;
             color: black;
-            span{
+
+            span {
                 display: block;
                 width: 100%;
                 background-color: #595959;
                 height: 3px;
             }
-            h3{
+
+            h3 {
                 padding-left: 5%;
             }
         }
     }
 
-    #CantidadPersonas {
-        /* position: fixed;
-        top: 0;
-        left: 0;
-        width: 100vw;
-        height: 100vh;
-        background-color: rgba(0, 0, 0, .60);
-        z-index: 1000;
-        color: white; */
+    #cantidadPersonas {
+        display: flex;
+        flex-wrap: nowrap;
+        justify-content: space-evenly;
+        align-items: center;
+        width: 15%;
     }
 
-    .seleccionado{
+    .seleccionado {
         background-color: rgb(47, 107, 179, .2);
         color: #2E6BB2;
     }
 
-    .derecha{
+    .derecha {
         display: flex;
         justify-content: space-around;
         align-items: center;
         width: 30%;
 
-        .Usuario{
+        .Usuario {
             display: flex;
             align-items: center;
-            span{
+
+            span {
                 display: block;
                 background-color: #595959;
                 width: 0.5rem;
@@ -143,21 +150,21 @@
                 border-radius: 50%;
             }
         }
-        
-        #MenuDesktop{
+
+        #MenuDesktop {
             display: flex;
             align-items: center;
             font-size: 30px;
             color: black;
         }
 
-        .Boton2{
+        .Boton2 {
             background-color: #ffff;
             color: black;
         }
     }
 }
 
-h1{
+h1 {
     color: white;
 }

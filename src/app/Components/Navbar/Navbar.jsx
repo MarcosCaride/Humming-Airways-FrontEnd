@@ -2,45 +2,47 @@
 import React, { useEffect, useState } from 'react'
 import "./Navbar.css"
 import { IoIosMenu, IoIosArrowUp } from "react-icons/io";
-import { FaPlaneDeparture, FaUser  } from "react-icons/fa";
-import { TiTick  } from "react-icons/ti";
+import { FaPlaneDeparture, FaUser } from "react-icons/fa";
+import { TiTick } from "react-icons/ti";
+import { FaPlus } from 'react-icons/fa6'
 
 const Navbar = () => {
 
-    const [ formularioReservaVisible, setFromularioVisible ] = useState(false)
-    const [ formularioTipoDeViajeVisible, setFormularioTipoDeViajeVisible ] = useState(false)
-    const [ formularioCantidadPasajerosVisible, setFormularioCantidadPasajerosVisible ] = useState(false)
+    const [formularioReservaVisible, setFromularioVisible] = useState(true)
+    const [formularioTipoDeViajeVisible, setFormularioTipoDeViajeVisible] = useState(false)
+    const [formularioCantidadPasajerosVisible, setFormularioCantidadPasajerosVisible] = useState(false)
 
-    const [ tipoDeViaje, setTipoDeViaje ] = useState('Ida y Vuelta')
+    const [tipoDeViaje, setTipoDeViaje] = useState('Ida y Vuelta')
     let origenSeleccionado
 
     useEffect(() => {
         let formulario = document.getElementById('FormularioReserva')
         let formularioTipoDeViaje = document.getElementById('FormularioTipoDeViaje')
-        let formularioCantidadPasajeros = document
-
-        let flechaTipo = document.getElementById('flechaTipo')
+        let formularioCantidadPersonas = document.getElementById('FormularioCantidadPersonas')
 
         let botonIda = document.getElementById('Ida')
         let tickIda = document.getElementById('IdaTick')
         let botonIdaVuelta = document.getElementById('IdaVuelta')
         let tickIdaVuelta = document.getElementById('IdaVueltaTick')
-        console.log(flechaTipo);
-        
-        
+
+
         if (formularioReservaVisible) {
             formulario.classList.remove('invisible')
-        }else{
+        } else {
             formulario.classList.add('invisible')
         }
 
         if (formularioTipoDeViajeVisible) {
             formularioTipoDeViaje.classList.remove('invisible')
-            flechaTipo.classList.add('dadoVuelta')
-        }else{
+        } else {
             formularioTipoDeViaje.classList.add('invisible')
-            flechaTipo.classList.remove('dadoVuelta')
         }
+
+        if (formularioCantidadPasajerosVisible) {
+            formularioCantidadPersonas.classList.remove('invisible')
+        } else {
+            formularioCantidadPersonas.classList.add('invisible')
+        }        
 
         if (tipoDeViaje == 'Ida y Vuelta') {
             botonIdaVuelta.classList.add('seleccionado')
@@ -48,20 +50,20 @@ const Navbar = () => {
             tickIda.style.display = 'none'
             tickIdaVuelta.style.display = 'inline'
 
-        }else{
+        } else {
             botonIdaVuelta.classList.remove('seleccionado')
             botonIda.classList.add('seleccionado')
             tickIda.style.display = 'inline'
             tickIdaVuelta.style.display = 'none'
         }
-    }, [formularioReservaVisible, formularioTipoDeViajeVisible, tipoDeViaje])
-    
-    
+    }, [formularioReservaVisible, formularioTipoDeViajeVisible, tipoDeViaje, formularioCantidadPasajerosVisible])
+
+
 
     useEffect(() => {
         async function getData() {
             let token = '4f2a879bd30eb1e8aaa328850c2306b2e376eab11acf6c3bb647772ee6e8a8a9'
-            let response = await fetch( "https://hummingairways.xgestion.com.ar/intranet/sys/mods/flights/motor.php", {
+            let response = await fetch("https://hummingairways.xgestion.com.ar/intranet/sys/mods/flights/motor.php", {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json;charset=utf-8',
@@ -71,8 +73,8 @@ const Navbar = () => {
                     "execute": "getAirportsFrom"
                 }
             })
-            
-            const data  = await response
+
+            const data = await response
             console.log(data);
         }
         getData()
@@ -82,7 +84,7 @@ const Navbar = () => {
         <div>
             <header id='Desktop'>
 
-        {/* Menu lado Izquierdo */}
+                {/* Menu lado Izquierdo */}
 
                 <div className='izquierda'>
                     <img src='/hummingMedia/LogoHM.png' alt="Logo de la empresa Humming Airways" />
@@ -97,7 +99,7 @@ const Navbar = () => {
                         <div id='TipoDeViaje' onClick={() => setFormularioTipoDeViajeVisible(!formularioTipoDeViajeVisible)}>
                             <FaPlaneDeparture />
                             <p id='opcionTipoDeViaje'>{tipoDeViaje}</p>
-                            <IoIosArrowUp id='flechaTipo' />
+                            <IoIosArrowUp id='flechaTipo' className={formularioTipoDeViajeVisible ? 'dadoVuelta' : ''}/>
                             <div id='FormularioTipoDeViaje' onClick={() => setFormularioTipoDeViajeVisible(false)}>
                                 <div id='select'>
                                     <h3 id='IdaVuelta' onClick={() => setTipoDeViaje('Ida y Vuelta')}>Ida y Vuelta <TiTick id='IdaVueltaTick' /></h3>
@@ -107,22 +109,23 @@ const Navbar = () => {
                             </div>
                         </div>
                         {/* formulario cantidad de personas */}
-                        <div id='CantidadPersonas'  onClick={() => setFormularioCantidadPasajerosVisible(false)}>
+                        <div id='CantidadPersonas'  className='cantidadPasajerosContainer' onClick={() => setFormularioCantidadPasajerosVisible(!formularioCantidadPasajerosVisible)}>
                             <FaUser />
-                            <IoIosArrowUp id='flechaTipo' />
-                            <div>
-                                <div>
-                                    <div>
+                            <IoIosArrowUp  className={formularioCantidadPasajerosVisible ? 'DadoVuelta' : ''} />
+                            <div id='FormularioCantidadPersonas' onClick={() => setFormularioCantidadPasajerosVisible(false)}>
+                                <div className='eleccionCategoriaPasajero'>
                                     <h3>Adultos</h3>
+                                    <div>
+                                        <FaPlus></FaPlus>
                                     </div>
                                 </div>
-                                <div>
+                                <div className='eleccionCategoriaPasajero'>
                                     <div>
                                         <h3>Niños</h3>
                                         <p>Niños debajo de los 14 años (menores acompañados) no pueden viajar solos en HM</p>
                                     </div>
                                 </div>
-                                <div>
+                                <div className='eleccionCategoriaPasajero'>
                                     <div>
                                         <h3>Bebés</h3>
                                         <p>Debajo de los 2 años, deben viajar sentados sobre el tutor responsable.</p>
@@ -141,7 +144,7 @@ const Navbar = () => {
                     </div>
                 </div>
 
-        {/* Menu lado Derecho */}
+                {/* Menu lado Derecho */}
 
                 <div className='derecha'>
                     <button className='Boton2'>Destinos</button>
@@ -152,7 +155,7 @@ const Navbar = () => {
                         <button className='Boton2'>Registrate</button>
                     </div>
                     <div id='MenuDesktop'>
-                        <IoIosMenu /> 
+                        <IoIosMenu />
                     </div>
                 </div>
             </header>
