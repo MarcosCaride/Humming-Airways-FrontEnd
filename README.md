@@ -68,17 +68,19 @@ Muestra u oculta los formularios de reserva y tipo de viaje.
 Tipo de Viaje:
 Cambia dinámicamente entre las opciones "Ida" y "Ida y Vuelta" al hacer clic en los botones correspondientes.
 >[!TIP]
->useEffect(() => {
-    >let formulario = document.getElementById('FormularioReserva');
-    >let formularioTipoDeViaje = document.getElementById('FormularioTipoDeViaje');
+>código:
+```
+useEffect(() => {
+    let formulario = document.getElementById('FormularioReserva');
+    let formularioTipoDeViaje = document.getElementById('FormularioTipoDeViaje');
 
-    >if (formularioReservaVisible) {
+    if (formularioReservaVisible) {
         formulario.classList.remove('invisible');
-    >} else {
+    } else {
         formulario.classList.add('invisible');
-    >}
->}, [formularioReservaVisible]);
-
+    }
+}, [formularioReservaVisible]);
+```
 ¡Claro! Aquí tienes un ejemplo de README.md para tu componente Navbar, explicando la importancia de "use client" y otros puntos clave. 🚀📚
 
 📚 Navbar Component Documentation
@@ -118,29 +120,33 @@ Tipo de Viaje:
 Cambia dinámicamente entre las opciones "Ida" y "Ida y Vuelta" al hacer clic en los botones correspondientes.
 
 >[!TIP]
->useEffect(() => {
-    >let formulario = document.getElementById('FormularioReserva');
-    >let formularioTipoDeViaje = document.getElementById('FormularioTipoDeViaje');
+>código:
+```
+useEffect(() => {
+    let formulario = document.getElementById('FormularioReserva');
+    let formularioTipoDeViaje = document.getElementById('FormularioTipoDeViaje');
 
-    >if (formularioReservaVisible) {
-        >formulario.classList.remove('invisible');
-    >} else {
-        >formulario.classList.add('invisible');
-    >}
->}, [formularioReservaVisible]);
-
+    if (formularioReservaVisible) {
+        formulario.classList.remove('invisible');
+    } else {
+        formulario.classList.add('invisible');
+    }
+}, [formularioReservaVisible]);
+```
 🧑‍💻 Uso del Componente
 En cualquier archivo React, importa y utiliza el componente:
 
 >[!TIP]
->import Navbar from './components/Navbar';
+>código:
+```
+import Navbar from './components/Navbar';
 
->function App() {
-  >return (
-    ><div>
-      ><Navbar />
-    ></div>
-  >);
->}
-
+function App() {
+ return (
+    <div>
+      <Navbar />
+    </div>
+  );
+}
+```
 
