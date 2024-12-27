@@ -110,6 +110,17 @@
         }
     }
 
+    #CantidadPersonas {
+        /* position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        background-color: rgba(0, 0, 0, .60);
+        z-index: 1000;
+        color: white; */
+    }
+
     .seleccionado{
         background-color: rgb(47, 107, 179, .2);
         color: #2E6BB2;

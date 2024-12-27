@@ -9,12 +9,15 @@ const Navbar = () => {
 
     const [ formularioReservaVisible, setFromularioVisible ] = useState(false)
     const [ formularioTipoDeViajeVisible, setFormularioTipoDeViajeVisible ] = useState(false)
+    const [ formularioCantidadPasajerosVisible, setFormularioCantidadPasajerosVisible ] = useState(false)
 
     const [ tipoDeViaje, setTipoDeViaje ] = useState('Ida y Vuelta')
+    let origenSeleccionado
 
     useEffect(() => {
         let formulario = document.getElementById('FormularioReserva')
         let formularioTipoDeViaje = document.getElementById('FormularioTipoDeViaje')
+        let formularioCantidadPasajeros = document
 
         let flechaTipo = document.getElementById('flechaTipo')
 
@@ -52,6 +55,28 @@ const Navbar = () => {
             tickIdaVuelta.style.display = 'none'
         }
     }, [formularioReservaVisible, formularioTipoDeViajeVisible, tipoDeViaje])
+    
+    
+
+    useEffect(() => {
+        async function getData() {
+            let token = '4f2a879bd30eb1e8aaa328850c2306b2e376eab11acf6c3bb647772ee6e8a8a9'
+            let response = await fetch( "https://hummingairways.xgestion.com.ar/intranet/sys/mods/flights/motor.php", {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json;charset=utf-8',
+                    'Authorization': `Bearer ${token}`
+                },
+                body: {
+                    "execute": "getAirportsFrom"
+                }
+            })
+            
+            const data  = await response
+            console.log(data);
+        }
+        getData()
+    })
 
     return (
         <div>
@@ -81,12 +106,38 @@ const Navbar = () => {
                                 </div>
                             </div>
                         </div>
-                        <div id='CantidadPersonas'>
+                        {/* formulario cantidad de personas */}
+                        <div id='CantidadPersonas'  onClick={() => setFormularioCantidadPasajerosVisible(false)}>
                             <FaUser />
+                            <IoIosArrowUp id='flechaTipo' />
+                            <div>
+                                <div>
+                                    <div>
+                                    <h3>Adultos</h3>
+                                    </div>
+                                </div>
+                                <div>
+                                    <div>
+                                        <h3>Niños</h3>
+                                        <p>Niños debajo de los 14 años (menores acompañados) no pueden viajar solos en HM</p>
+                                    </div>
+                                </div>
+                                <div>
+                                    <div>
+                                        <h3>Bebés</h3>
+                                        <p>Debajo de los 2 años, deben viajar sentados sobre el tutor responsable.</p>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                     <div className='formAbajo'>
-
+                        <div id='DestinoOrigen'>
+                            <div id='Origen'>
+                                <p>Origen</p>
+                                <h3>{origenSeleccionado}</h3>
+                            </div>
+                        </div>
                     </div>
                 </div>
 
