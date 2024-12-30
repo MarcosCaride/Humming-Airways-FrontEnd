@@ -32,8 +32,13 @@ const Navbar = () => {
 
 
     const validacionCantidadPasajeros = () => {
-        if (cantidadAdultos + cantidadNinos + cantidadBebes > 9) {
-            alert('No puedes seleccionar mas de 9 pasajeros')
+        if (cantidadAdultos > 9) {
+            return false
+        }
+        if (cantidadBebes > cantidadAdultos) {
+            return false
+        }
+        if (cantidadNinos + cantidadAdultos > 9) {
             return false
         }
         return true
@@ -181,39 +186,42 @@ const Navbar = () => {
                             <IoIosArrowUp className={formularioCantidadPasajerosVisible ? 'dadoVuelta' : ''} />
                         </div>
                         <div id='FormularioCantidadPasajeros' onClick={() => setFormularioCantidadPasajerosVisible(true)} className={formularioCantidadPasajerosVisible ? '' : 'invisible'}>
-                            <div className='ContainerTipoPasajero'>
-                                <div className='eleccionCategoriaPasajero'>
-                                    <h3>Adultos</h3>
-                                    <div className='botonesCantidadPasajeros'>
-                                        <FaMinus onClick={() => setCantidadAdultos(cantidadAdultos - 1)} />
-                                        <p>{cantidadAdultos}</p>
-                                        <FaPlus onClick={() => setCantidadAdultos(cantidadAdultos + 1)} />
+                            <div>
+
+                                <div className='ContainerTipoPasajero'>
+                                    <div className='eleccionCategoriaPasajero'>
+                                        <h3>Adultos</h3>
+                                        <div className='botonesCantidadPasajeros'>
+                                            <FaMinus onClick={() => setCantidadAdultos(cantidadAdultos - 1)} />
+                                            <p>{cantidadAdultos}</p>
+                                            <FaPlus onClick={() => setCantidadAdultos(cantidadAdultos + 1)} />
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                            <div className='ContainerTipoPasajero' >
-                                <div className='eleccionCategoriaPasajero'>
-                                    <h3>Niños</h3>
-                                    <div className='botonesCantidadPasajeros'>
-                                        <FaMinus onClick={() => setCantidadNinos(cantidadNinos - 1)} />
-                                        <p>{cantidadNinos}</p>
-                                        <FaPlus onClick={() => setCantidadNinos(cantidadNinos + 1)} />
+                                <div className='ContainerTipoPasajero' >
+                                    <div className='eleccionCategoriaPasajero'>
+                                        <h3>Niños</h3>
+                                        <div className='botonesCantidadPasajeros'>
+                                            <FaMinus onClick={() => setCantidadNinos(cantidadNinos - 1)} />
+                                            <p>{cantidadNinos}</p>
+                                            <FaPlus onClick={() => setCantidadNinos(cantidadNinos + 1)} />
+                                        </div>
                                     </div>
+                                    <p>Niños debajo de los 14 años (menores acompañados) no pueden viajar solos en HM</p>
                                 </div>
-                                <p>Niños debajo de los 14 años (menores acompañados) no pueden viajar solos en HM</p>
-                            </div>
-                            <div className='ContainerTipoPasajero'>
-                                <div className='eleccionCategoriaPasajero'>
-                                    <h3>Bebés</h3>
-                                    <div className='botonesCantidadPasajeros'>
-                                        <FaMinus onClick={() => setCantidadBebes(cantidadBebes - 1)} />
-                                        <p>{cantidadBebes}</p>
-                                        <FaPlus onClick={() => setCantidadBebes(cantidadBebes + 1)} />
+                                <div className='ContainerTipoPasajero'>
+                                    <div className='eleccionCategoriaPasajero'>
+                                        <h3>Bebés</h3>
+                                        <div className='botonesCantidadPasajeros'>
+                                            <FaMinus onClick={() => setCantidadBebes(cantidadBebes - 1)} />
+                                            <p>{cantidadBebes}</p>
+                                            <FaPlus onClick={() => setCantidadBebes(cantidadBebes + 1)} />
+                                        </div>
                                     </div>
+                                    <p>Debajo de los 2 años, deben viajar sentados sobre el tutor responsable.</p>
                                 </div>
-                                <p>Debajo de los 2 años, deben viajar sentados sobre el tutor responsable.</p>
+                                <button onClick={() => setFormularioCantidadPasajerosVisible(false)}>Listo</button>
                             </div>
-                            <button onClick={() => setFormularioCantidadPasajerosVisible(false)}>Listo</button>
 
                         </div>
                     </div>
