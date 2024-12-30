@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from 'react'
 import "./Navbar.css"
 import { IoIosMenu, IoIosArrowUp } from "react-icons/io";
-import { FaPlaneDeparture, FaUse } from "react-icons/fa";
+import { FaPlaneDeparture, FaUser } from "react-icons/fa";
 import { FaPlus, FaMinus } from 'react-icons/fa6'
 import { TiTick } from "react-icons/ti";
 
