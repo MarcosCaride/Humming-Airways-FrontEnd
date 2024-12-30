@@ -22,11 +22,11 @@ const Navbar = () => {
     const [cantidadBebes, setCantidadBebes] = useState(0)
 
     // SELECCION DE ORIGENES Y DESTINOS
-    const [origenSeleccionado, setOrigenSeleccionado] = useState({ Nombre: 'Selecciona el origen', id: '' })
+    const [origenSeleccionado, setOrigenSeleccionado] = useState({ Nombre: '', id: '', code:'' })
     const [formularioOrigenVisible, setFormularioOrigenVisible] = useState(false)
     const [origenes, setOrigenes] = useState([])
 
-    const [destinoSeleccionado, setDestinoSeleccionado] = useState({ Nombre: '', id: '' })
+    const [destinoSeleccionado, setDestinoSeleccionado] = useState({ Nombre: '', id: '', code:'' })
     const [formularioDestinoVisible, setFormularioDestinoVisible] = useState(false)
     const [destinos, setDestinos] = useState([])
 
@@ -105,7 +105,7 @@ const Navbar = () => {
 
             let data = await response.json()
             let listaAirports = data.AirportsFrom.map(Airport =>
-                <p key={Airport.airportId} onClick={() => setOrigenSeleccionado({ Nombre: Airport.airportName, id: Airport.airportId })}>{Airport.airportName}</p>
+                <p key={Airport.airportId} className='ListaAirports' onClick={() => setOrigenSeleccionado({ Nombre: Airport.airportName, id: Airport.airportId, code: Airport.airportCode })}>{Airport.airportName} <span className='spanSelect'>{` (${Airport.airportCode})`}</span></p>
 
             )
             console.log(listaAirports);
@@ -116,6 +116,8 @@ const Navbar = () => {
         }
         getData()
     }, [])
+
+    // OBTENEMOS LOS DESTINOS DISPONIBLES PARA EL ORIGEN SELECCIONADO
 
     useEffect(() => {
         async function getDestinos() {
@@ -133,18 +135,62 @@ const Navbar = () => {
 
             let data = await response.json()
             console.log(data.AirportsTo);
+            console.log(Object.values(data.AirportsTo));
+            let dataDestinos = Object.values(data.AirportsTo)
+            console.log("DataDestinos");
+            console.log(dataDestinos);
+            
 
-            let listaDestinos = Object.keys(data.AirportsTo).map(Airport => {
-                <p key={Airport.airportId} onClick={() => setDestinoSeleccionado(Airport.airportName)}>{Airport.airportName}</p>
-            })
+            let listaDestinos = dataDestinos.map(Airport => 
+                <p key={Airport.airportId} className='ListaAirports' onClick={() => setDestinoSeleccionado({ Nombre: Airport.airportName, id: Airport.airportId, code: Airport.airportCode })}>{Airport.airportName}<span className='spanSelect'>{` (${Airport.airportCode})`}</span></p>
+            )
             console.log(listaDestinos);
 
             setDestinos(listaDestinos)
 
         }
         getDestinos()
+        setDestinoSeleccionado({ Nombre: '', id: '', code: '' })
 
     }, [origenSeleccionado])
+
+
+    // OBTENEMOS LOS VUELOS DISPONIBLES
+
+    useEffect(() => {
+        async function getVuelos() {
+            let bodyData = new FormData()
+            bodyData.append('execute', 'getFlightDates')
+            bodyData.append('airportFrom', origenSeleccionado.id)
+            bodyData.append('airportTo', destinoSeleccionado.id)
+
+            let token = '4f2a879bd30eb1e8aaa328850c2306b2e376eab11acf6c3bb647772ee6e8a8a9'
+            let response = await fetch("https://hummingairways.xgestion.com.ar/intranet/sys/mods/flights/motor.php", {
+                method: 'POST',
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                },
+                body: bodyData
+            })
+
+            // let data = await response.json()
+            // console.log(data.AirportsTo);
+            // console.log(Object.values(data.AirportsTo));
+            // let dataDestinos = Object.values(data.AirportsTo)
+            // console.log("DataDestinos");
+            // console.log(dataDestinos);
+            
+
+            // let listaDestinos = dataDestinos.map(Airport => 
+            //     <p key={Airport.airportId} className='ListaAirports' onClick={() => setDestinoSeleccionado({ Nombre: Airport.airportName, id: Airport.airportId, code: Airport.airportCode })}>{Airport.airportName}<span className='spanSelect'>{` (${Airport.airportCode})`}</span></p>
+            // )
+            // console.log(listaDestinos);
+
+            // setDestinos(listaDestinos)
+
+        }
+        getVuelos()
+    }, [destinoSeleccionado])
 
     return (
         <div>
@@ -162,10 +208,10 @@ const Navbar = () => {
                 </div>
                 <div id='FormularioReserva' className='invisible'>
                     <div className='formArriba'>
-                        <div id='TipoDeViaje' onClick={() => setFormularioTipoDeViajeVisible(!formularioTipoDeViajeVisible)}>
+                        <div id='TipoDeViaje' className='Input' onClick={() => setFormularioTipoDeViajeVisible(!formularioTipoDeViajeVisible)}>
                             <FaPlaneDeparture />
                             <p id='opcionTipoDeViaje'>{tipoDeViaje}</p>
-                            <IoIosArrowUp id='flechaTipo' className={formularioTipoDeViajeVisible ? 'dadoVuelta' : ''} />
+                            <IoIosArrowUp id='flechaTipo' className={formularioTipoDeViajeVisible ? 'dadoVuelta BttnAzul' : 'BttnAzul'} />
                             <div id='FormularioTipoDeViaje' onClick={() => setFormularioTipoDeViajeVisible(false)}>
                                 <div id='select'>
                                     <h3 id='IdaVuelta' onClick={() => setTipoDeViaje('Ida y Vuelta')}>Ida y Vuelta <TiTick id='IdaVueltaTick' /></h3>
@@ -175,10 +221,10 @@ const Navbar = () => {
                             </div>
                         </div>
                         {/* formulario cantidad de personas */}
-                        <div id='CantidadPersonas' onClick={() => setFormularioCantidadPasajerosVisible(true)}>
+                        <div id='CantidadPersonas' className='Input' onClick={() => setFormularioCantidadPasajerosVisible(true)}>
                             <FaUser />
                             <p>{cantidadPasajeros}</p>
-                            <IoIosArrowUp className={formularioCantidadPasajerosVisible ? 'dadoVuelta' : ''} />
+                            <IoIosArrowUp className={ formularioCantidadPasajerosVisible ? 'dadoVuelta BttnAzul' : 'BttnAzul' } />
                         </div>
                         <div id='FormularioCantidadPasajeros' onClick={() => setFormularioCantidadPasajerosVisible(true)} className={formularioCantidadPasajerosVisible ? '' : 'invisible'}>
                             <div className='ContainerTipoPasajero'>
@@ -217,20 +263,30 @@ const Navbar = () => {
 
                         </div>
                     </div>
+
+
                     <div className='formAbajo'>
+
+                        {/* SELECCION DE ORIGEN Y DESETINO  */}
                         <div id='DestinoOrigen'>
-                            <div id='Origen' onClick={() => setFormularioOrigenVisible(true)}>
+                            <div id='Origen' className='Input Select' onClick={() => setFormularioOrigenVisible(true)}>
                                 <p>Origen</p>
-                                <h3>{origenSeleccionado.Nombre} <IoIosArrowUp /></h3>
+                                <div className='selectInput'>
+                                    <h3>{origenSeleccionado.code == '' ? 'Desde' : origenSeleccionado.code}</h3>
+                                    <IoIosArrowUp className='BttnAzul Arrow' />
+                                </div>
                             </div>
                             <div id='FormularioOrigen' onClick={() => setFormularioOrigenVisible(false)} className={formularioOrigenVisible ? '' : 'invisible'}>
                                 <div id='selectOrigen'>
                                     {origenes}
                                 </div>
                             </div>
-                            <div id='Destino' onClick={() => setFormularioDestinoVisible(true)}>
-                                <p>Origen</p>
-                                <h3>{destinoSeleccionado.Nombre} <IoIosArrowUp /></h3>
+                            <div id='Destino' className='Input Select' onClick={() => setFormularioDestinoVisible(true)}>
+                                <p>Destino</p>
+                                <div className='selectInput'>
+                                    <h3>{destinoSeleccionado.code == '' ? 'Hasta' : destinoSeleccionado.code }</h3>
+                                    <IoIosArrowUp className='BttnAzul Arrow' />
+                                </div>
                             </div>
                             <div id='FormularioOrigen' onClick={() => setFormularioDestinoVisible(false)} className={formularioDestinoVisible ? '' : 'invisible'}>
                                 <div id='selectOrigen'>

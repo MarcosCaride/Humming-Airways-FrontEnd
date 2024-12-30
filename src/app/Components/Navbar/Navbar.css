@@ -215,6 +215,20 @@
 
     #DestinoOrigen {
         color: black;
+        display: flex;
+
+        .Select{
+            display: block;
+            width: 20%;
+            .selectInput{
+                display: flex;
+                flex-wrap: nowrap;
+                justify-content: space-between;
+                .Arrow{
+                    font-size: xx-large;
+                }
+            }
+        }
 
         #FormularioOrigen {
             position: fixed;
@@ -231,7 +245,7 @@
                 top: 20.5%;
                 left: 11.5%;
                 padding: 1rem;
-                width: 40%;
+                width: 50%;
                 font-family: 'Open Sans', 'Open Sans Fallback';
                 background-color: white;
                 opacity: 1;
@@ -240,6 +254,35 @@
 
         }
     }
+}
+
+.Input{
+    padding: 0.1rem;
+    margin: 0.1rem;
+    border-bottom: #595959 3px solid;
+    h3{
+        font-size: x-large;
+    }
+}
+
+.BttnAzul{
+    color: #2E6BB2;
+}
+
+.spanSelect{
+    font-weight: bolder;
+}
+
+.ListaAirports{
+    margin: 0.3rem 0;
+    font-size: large;
+    border-bottom: #595959 solid 2px;
+}
+
+.ListaAirports:hover{
+    cursor: pointer;
+    color: #2E6BB2;
+    font-weight: 600
 }
 
 h1 {
