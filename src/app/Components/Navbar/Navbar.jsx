@@ -5,6 +5,8 @@ import { IoIosMenu, IoIosArrowUp } from "react-icons/io";
 import { FaPlaneDeparture, FaUser } from "react-icons/fa";
 import { TiTick } from "react-icons/ti";
 import { FaPlus } from 'react-icons/fa6'
+import { FaMinus } from "react-icons/fa6";
+
 
 const Navbar = () => {
 
@@ -18,7 +20,7 @@ const Navbar = () => {
     useEffect(() => {
         let formulario = document.getElementById('FormularioReserva')
         let formularioTipoDeViaje = document.getElementById('FormularioTipoDeViaje')
-        let formularioCantidadPersonas = document.getElementById('FormularioCantidadPersonas')
+        let formularioCantidadPasajeros = document.getElementById('FormularioCantidadPasajeros')
 
         let botonIda = document.getElementById('Ida')
         let tickIda = document.getElementById('IdaTick')
@@ -39,10 +41,10 @@ const Navbar = () => {
         }
 
         if (formularioCantidadPasajerosVisible) {
-            formularioCantidadPersonas.classList.remove('invisible')
+            formularioCantidadPasajeros.classList.remove('invisible')
         } else {
-            formularioCantidadPersonas.classList.add('invisible')
-        }        
+            formularioCantidadPasajeros.classList.add('invisible')
+        }
 
         if (tipoDeViaje == 'Ida y Vuelta') {
             botonIdaVuelta.classList.add('seleccionado')
@@ -99,7 +101,7 @@ const Navbar = () => {
                         <div id='TipoDeViaje' onClick={() => setFormularioTipoDeViajeVisible(!formularioTipoDeViajeVisible)}>
                             <FaPlaneDeparture />
                             <p id='opcionTipoDeViaje'>{tipoDeViaje}</p>
-                            <IoIosArrowUp id='flechaTipo' className={formularioTipoDeViajeVisible ? 'dadoVuelta' : ''}/>
+                            <IoIosArrowUp id='flechaTipo' className={formularioTipoDeViajeVisible ? 'dadoVuelta' : ''} />
                             <div id='FormularioTipoDeViaje' onClick={() => setFormularioTipoDeViajeVisible(false)}>
                                 <div id='select'>
                                     <h3 id='IdaVuelta' onClick={() => setTipoDeViaje('Ida y Vuelta')}>Ida y Vuelta <TiTick id='IdaVueltaTick' /></h3>
@@ -109,27 +111,38 @@ const Navbar = () => {
                             </div>
                         </div>
                         {/* formulario cantidad de personas */}
-                        <div id='CantidadPersonas'  className='cantidadPasajerosContainer' onClick={() => setFormularioCantidadPasajerosVisible(!formularioCantidadPasajerosVisible)}>
+                        <div id='CantidadPersonas' className='cantidadPasajerosContainer' onClick={() => setFormularioCantidadPasajerosVisible(!formularioCantidadPasajerosVisible)}>
                             <FaUser />
-                            <IoIosArrowUp  className={formularioCantidadPasajerosVisible ? 'DadoVuelta' : ''} />
-                            <div id='FormularioCantidadPersonas' onClick={() => setFormularioCantidadPasajerosVisible(false)}>
-                                <div className='eleccionCategoriaPasajero'>
-                                    <h3>Adultos</h3>
-                                    <div>
-                                        <FaPlus></FaPlus>
+                            <IoIosArrowUp className={formularioCantidadPasajerosVisible ? 'DadoVuelta' : ''} />
+                            <div id='FormularioCantidadPasajeros' onClick={() => setFormularioCantidadPasajerosVisible(false)}>
+                                <div className='ContainerTipoPasajero'>
+                                    <div className='eleccionCategoriaPasajero'>
+                                        <h3>Adultos</h3>
+                                        <div className='botonesCantidadPasajeros'>
+                                            <FaMinus></FaMinus>
+                                            <FaPlus></FaPlus>
+                                        </div>
                                     </div>
                                 </div>
-                                <div className='eleccionCategoriaPasajero'>
-                                    <div>
+                                <div className='ContainerTipoPasajero' >
+                                    <div className='eleccionCategoriaPasajero'>
                                         <h3>Niños</h3>
-                                        <p>Niños debajo de los 14 años (menores acompañados) no pueden viajar solos en HM</p>
+                                        <div className='botonesCantidadPasajeros'>
+                                            <FaMinus></FaMinus>
+                                            <FaPlus></FaPlus>
+                                        </div>
                                     </div>
+                                    <p>Niños debajo de los 14 años (menores acompañados) no pueden viajar solos en HM</p>
                                 </div>
-                                <div className='eleccionCategoriaPasajero'>
-                                    <div>
+                                <div className='ContainerTipoPasajero'>
+                                    <div className='eleccionCategoriaPasajero'>
                                         <h3>Bebés</h3>
-                                        <p>Debajo de los 2 años, deben viajar sentados sobre el tutor responsable.</p>
+                                        <div className='botonesCantidadPasajeros'>
+                                            <FaMinus></FaMinus>
+                                            <FaPlus></FaPlus>
+                                        </div>
                                     </div>
+                                    <p>Debajo de los 2 años, deben viajar sentados sobre el tutor responsable.</p>
                                 </div>
                             </div>
                         </div>

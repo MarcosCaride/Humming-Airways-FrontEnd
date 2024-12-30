@@ -119,6 +119,42 @@
         }
     }
 
+    #FormularioCantidadPasajeros {
+        display: flex;
+        flex-wrap: wrap;
+        flex-direction: column;
+        width: 70%;
+        gap: 1rem;
+        .ContainerTipoPasajero {
+            border-bottom: 1.3px solid #59595994;
+            height: 5rem;
+            .eleccionCategoriaPasajero {
+                display: flex;
+                justify-content: space-between;
+
+                .botonesCantidadPasajeros {
+                    display: flex;
+                    justify-content: space-between;
+                    width: 30%;
+
+                    svg:first-of-type {
+                        color: #595959;
+                    }
+
+                    svg:nth-of-type(2) {
+                        color: #2E6BB2;
+                    }
+
+                    cursor: pointer;
+                    font-size: 1.4rem;
+
+                }
+            }
+        }
+
+
+    }
+
     #cantidadPersonas {
         display: flex;
         flex-wrap: nowrap;
