@@ -11,19 +11,33 @@ const Navbar = () => {
 
     const [formularioReservaVisible, setFromularioVisible] = useState(true)
     const [formularioTipoDeViajeVisible, setFormularioTipoDeViajeVisible] = useState(false)
-    const [formularioCantidadPasajerosVisible, setFormularioCantidadPasajerosVisible] = useState(false) 
+    const [formularioCantidadPasajerosVisible, setFormularioCantidadPasajerosVisible] = useState(false)
 
-    const [ tipoDeViaje, setTipoDeViaje ] = useState('Ida y Vuelta')
+    const [tipoDeViaje, setTipoDeViaje] = useState('Ida y Vuelta')
+
+    // SELECCION DE CANTIDAD DE PASAJEROS
+    const [cantidadPasajeros, setCantidadPasajeros] = useState(1)
+    const [cantidadAdultos, setCantidadAdultos] = useState(1)
+    const [cantidadNinos, setCantidadNinos] = useState(0)
+    const [cantidadBebes, setCantidadBebes] = useState(0)
 
     // SELECCION DE ORIGENES Y DESTINOS
-    const [ origenSeleccionado, setOrigenSeleccionado ] = useState({Nombre: 'Selecciona el origen', id:''}) 
-    const [ formularioOrigenVisible, setFormularioOrigenVisible ] = useState(false)
-    const [ origenes, setOrigenes ] = useState([])
-    
-    const [ destinoSeleccionado, setDestinoSeleccionado ] = useState({Nombre: '', id:''})
-    const [ formularioDestinoVisible, setFormularioDestinoVisible ] = useState(false)
-    const [ destinos, setDestinos ] = useState([])
+    const [origenSeleccionado, setOrigenSeleccionado] = useState({ Nombre: 'Selecciona el origen', id: '' })
+    const [formularioOrigenVisible, setFormularioOrigenVisible] = useState(false)
+    const [origenes, setOrigenes] = useState([])
 
+    const [destinoSeleccionado, setDestinoSeleccionado] = useState({ Nombre: '', id: '' })
+    const [formularioDestinoVisible, setFormularioDestinoVisible] = useState(false)
+    const [destinos, setDestinos] = useState([])
+
+
+    const validacionCantidadPasajeros = () => {
+        if (cantidadAdultos + cantidadNinos + cantidadBebes > 9) {
+            alert('No puedes seleccionar mas de 9 pasajeros')
+            return false
+        }
+        return true
+    }
 
     useEffect(() => {
         let formulario = document.getElementById('FormularioReserva')
@@ -66,19 +80,19 @@ const Navbar = () => {
             tickIda.style.display = 'inline'
             tickIdaVuelta.style.display = 'none'
         }
-        
+
     }, [formularioReservaVisible, formularioTipoDeViajeVisible, tipoDeViaje, formularioOrigenVisible])
 
     useEffect(() => {
         console.log('actualizando');
         console.log(formularioOrigenVisible);
-        
-        
+
+
     }, [formularioOrigenVisible])
 
     useEffect(() => {
         async function getData() {
-            let bodyData= new FormData()
+            let bodyData = new FormData()
             bodyData.append('execute', 'getAirportsFrom')
             let token = '4f2a879bd30eb1e8aaa328850c2306b2e376eab11acf6c3bb647772ee6e8a8a9'
             let response = await fetch("https://hummingairways.xgestion.com.ar/intranet/sys/mods/flights/motor.php", {
@@ -88,48 +102,48 @@ const Navbar = () => {
                 },
                 body: bodyData
             })
-            
+
             let data = await response.json()
-            let listaAirports = data.AirportsFrom.map(Airport => 
-                <p key={Airport.airportId} onClick={() => setOrigenSeleccionado({Nombre: Airport.airportName, id:Airport.airportId})}>{Airport.airportName}</p>
-                
+            let listaAirports = data.AirportsFrom.map(Airport =>
+                <p key={Airport.airportId} onClick={() => setOrigenSeleccionado({ Nombre: Airport.airportName, id: Airport.airportId })}>{Airport.airportName}</p>
+
             )
             console.log(listaAirports);
-            
+
             setOrigenes(listaAirports)
-            
-            
+
+
         }
         getData()
-    },[])
+    }, [])
 
     useEffect(() => {
         async function getDestinos() {
-            let bodyData= new FormData()
+            let bodyData = new FormData()
             bodyData.append('execute', 'getAirportsTo')
             bodyData.append('airportFrom', origenSeleccionado.id)
             let token = '4f2a879bd30eb1e8aaa328850c2306b2e376eab11acf6c3bb647772ee6e8a8a9'
-            let response = await fetch( "https://hummingairways.xgestion.com.ar/intranet/sys/mods/flights/motor.php", {
+            let response = await fetch("https://hummingairways.xgestion.com.ar/intranet/sys/mods/flights/motor.php", {
                 method: 'POST',
                 headers: {
                     'Authorization': `Bearer ${token}`
                 },
                 body: bodyData
             })
-            
+
             let data = await response.json()
             console.log(data.AirportsTo);
-            
-            let listaDestinos = Object.keys(data.AirportsTo).map (Airport => {
+
+            let listaDestinos = Object.keys(data.AirportsTo).map(Airport => {
                 <p key={Airport.airportId} onClick={() => setDestinoSeleccionado(Airport.airportName)}>{Airport.airportName}</p>
             })
             console.log(listaDestinos);
-            
+
             setDestinos(listaDestinos)
-            
+
         }
         getDestinos()
-        
+
     }, [origenSeleccionado])
 
     return (
@@ -161,17 +175,19 @@ const Navbar = () => {
                             </div>
                         </div>
                         {/* formulario cantidad de personas */}
-                        <div id='CantidadPersonas'  onClick={() => setFormularioCantidadPasajerosVisible(true)}>
+                        <div id='CantidadPersonas' onClick={() => setFormularioCantidadPasajerosVisible(true)}>
                             <FaUser />
-                            <IoIosArrowUp className={formularioCantidadPasajerosVisible ? 'DadoVuelta' : ''} />
+                            <p>{cantidadPasajeros}</p>
+                            <IoIosArrowUp className={formularioCantidadPasajerosVisible ? 'dadoVuelta' : ''} />
                         </div>
-                        <div id='FormularioCantidadPasajeros' onClick={() => setFormularioCantidadPasajerosVisible(false)} className={formularioCantidadPasajerosVisible ? '' : 'invisible' }>
+                        <div id='FormularioCantidadPasajeros' onClick={() => setFormularioCantidadPasajerosVisible(true)} className={formularioCantidadPasajerosVisible ? '' : 'invisible'}>
                             <div className='ContainerTipoPasajero'>
                                 <div className='eleccionCategoriaPasajero'>
                                     <h3>Adultos</h3>
                                     <div className='botonesCantidadPasajeros'>
-                                        <FaMinus />
-                                        <FaPlus />
+                                        <FaMinus onClick={() => setCantidadAdultos(cantidadAdultos - 1)} />
+                                        <p>{cantidadAdultos}</p>
+                                        <FaPlus onClick={() => setCantidadAdultos(cantidadAdultos + 1)} />
                                     </div>
                                 </div>
                             </div>
@@ -179,8 +195,9 @@ const Navbar = () => {
                                 <div className='eleccionCategoriaPasajero'>
                                     <h3>Niños</h3>
                                     <div className='botonesCantidadPasajeros'>
-                                        <FaMinus></FaMinus>
-                                        <FaPlus></FaPlus>
+                                        <FaMinus onClick={() => setCantidadNinos(cantidadNinos - 1)} />
+                                        <p>{cantidadNinos}</p>
+                                        <FaPlus onClick={() => setCantidadNinos(cantidadNinos + 1)} />
                                     </div>
                                 </div>
                                 <p>Niños debajo de los 14 años (menores acompañados) no pueden viajar solos en HM</p>
@@ -189,12 +206,15 @@ const Navbar = () => {
                                 <div className='eleccionCategoriaPasajero'>
                                     <h3>Bebés</h3>
                                     <div className='botonesCantidadPasajeros'>
-                                        <FaMinus></FaMinus>
-                                        <FaPlus></FaPlus>
+                                        <FaMinus onClick={() => setCantidadBebes(cantidadBebes - 1)} />
+                                        <p>{cantidadBebes}</p>
+                                        <FaPlus onClick={() => setCantidadBebes(cantidadBebes + 1)} />
                                     </div>
                                 </div>
                                 <p>Debajo de los 2 años, deben viajar sentados sobre el tutor responsable.</p>
                             </div>
+                            <button onClick={() => setFormularioCantidadPasajerosVisible(false)}>Listo</button>
+
                         </div>
                     </div>
                     <div className='formAbajo'>
@@ -203,7 +223,7 @@ const Navbar = () => {
                                 <p>Origen</p>
                                 <h3>{origenSeleccionado.Nombre} <IoIosArrowUp /></h3>
                             </div>
-                            <div id='FormularioOrigen' onClick={() => setFormularioOrigenVisible(false)} className={formularioOrigenVisible ? '': 'invisible'}>
+                            <div id='FormularioOrigen' onClick={() => setFormularioOrigenVisible(false)} className={formularioOrigenVisible ? '' : 'invisible'}>
                                 <div id='selectOrigen'>
                                     {origenes}
                                 </div>
@@ -212,7 +232,7 @@ const Navbar = () => {
                                 <p>Origen</p>
                                 <h3>{destinoSeleccionado.Nombre} <IoIosArrowUp /></h3>
                             </div>
-                            <div id='FormularioOrigen' onClick={() => setFormularioDestinoVisible(false)} className={formularioDestinoVisible ? '': 'invisible'}>
+                            <div id='FormularioOrigen' onClick={() => setFormularioDestinoVisible(false)} className={formularioDestinoVisible ? '' : 'invisible'}>
                                 <div id='selectOrigen'>
                                     {destinos}
                                 </div>
