@@ -67,19 +67,16 @@ Visibilidad de Formularios:
 Muestra u oculta los formularios de reserva y tipo de viaje.
 Tipo de Viaje:
 Cambia dinámicamente entre las opciones "Ida" y "Ida y Vuelta" al hacer clic en los botones correspondientes.
+Cambia la cantidad de pasajeros que demuestra el display.
 >[!TIP]
 >código:
 ```
 useEffect(() => {
-    let formulario = document.getElementById('FormularioReserva');
-    let formularioTipoDeViaje = document.getElementById('FormularioTipoDeViaje');
-
-    if (formularioReservaVisible) {
-        formulario.classList.remove('invisible');
-    } else {
-        formulario.classList.add('invisible');
-    }
-}, [formularioReservaVisible]);
+        let formulario = document.getElementById('FormularioReserva')
+        let formularioTipoDeViaje = document.getElementById('FormularioTipoDeViaje')
+        let formularioCantidadPersonas = document.getElementById('FormularioCantidadPersonas')
+      
+    }, [formularioReservaVisible, formularioTipoDeViajeVisible, tipoDeViaje, formularioCantidadPasajerosVisible])
 ```
 ¡Claro! Aquí tienes un ejemplo de README.md para tu componente Navbar, explicando la importancia de "use client" y otros puntos clave. 🚀📚
 
