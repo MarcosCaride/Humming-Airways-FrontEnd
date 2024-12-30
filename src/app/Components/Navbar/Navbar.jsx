@@ -2,17 +2,16 @@
 import React, { useEffect, useState } from 'react'
 import "./Navbar.css"
 import { IoIosMenu, IoIosArrowUp } from "react-icons/io";
-import { FaPlaneDeparture, FaUser } from "react-icons/fa";
+import { FaPlaneDeparture, FaUse } from "react-icons/fa";
+import { FaPlus, FaMinus } from 'react-icons/fa6'
 import { TiTick } from "react-icons/ti";
-import { FaPlus } from 'react-icons/fa6'
-import { FaMinus } from "react-icons/fa6";
 
 
 const Navbar = () => {
 
     const [formularioReservaVisible, setFromularioVisible] = useState(true)
     const [formularioTipoDeViajeVisible, setFormularioTipoDeViajeVisible] = useState(false)
-    const [formularioCantidadPasajerosVisible, setFormularioCantidadPasajerosVisible] = useState(false)
+    const [formularioCantidadPasajerosVisible, setFormularioCantidadPasajerosVisible] = useState(false) 
 
     const [ tipoDeViaje, setTipoDeViaje ] = useState('Ida y Vuelta')
 
@@ -162,41 +161,41 @@ const Navbar = () => {
                             </div>
                         </div>
                         {/* formulario cantidad de personas */}
-                        {/* <div id='CantidadPersonas'  onClick={() => setFormularioCantidadPasajerosVisible(false)}>
+                        <div id='CantidadPersonas'  onClick={() => setFormularioCantidadPasajerosVisible(true)}>
                             <FaUser />
                             <IoIosArrowUp className={formularioCantidadPasajerosVisible ? 'DadoVuelta' : ''} />
-                            <div id='FormularioCantidadPasajeros' onClick={() => setFormularioCantidadPasajerosVisible(false)}>
-                                <div className='ContainerTipoPasajero'>
-                                    <div className='eleccionCategoriaPasajero'>
-                                        <h3>Adultos</h3>
-                                        <div className='botonesCantidadPasajeros'>
-                                            <FaMinus></FaMinus>
-                                            <FaPlus></FaPlus>
-                                        </div>
+                        </div>
+                        <div id='FormularioCantidadPasajeros' onClick={() => setFormularioCantidadPasajerosVisible(false)} className={formularioCantidadPasajerosVisible ? '' : 'invisible' }>
+                            <div className='ContainerTipoPasajero'>
+                                <div className='eleccionCategoriaPasajero'>
+                                    <h3>Adultos</h3>
+                                    <div className='botonesCantidadPasajeros'>
+                                        <FaMinus />
+                                        <FaPlus />
                                     </div>
-                                </div>
-                                <div className='ContainerTipoPasajero' >
-                                    <div className='eleccionCategoriaPasajero'>
-                                        <h3>Niños</h3>
-                                        <div className='botonesCantidadPasajeros'>
-                                            <FaMinus></FaMinus>
-                                            <FaPlus></FaPlus>
-                                        </div>
-                                    </div>
-                                    <p>Niños debajo de los 14 años (menores acompañados) no pueden viajar solos en HM</p>
-                                </div>
-                                <div className='ContainerTipoPasajero'>
-                                    <div className='eleccionCategoriaPasajero'>
-                                        <h3>Bebés</h3>
-                                        <div className='botonesCantidadPasajeros'>
-                                            <FaMinus></FaMinus>
-                                            <FaPlus></FaPlus>
-                                        </div>
-                                    </div>
-                                    <p>Debajo de los 2 años, deben viajar sentados sobre el tutor responsable.</p>
                                 </div>
                             </div>
-                        </div> */}
+                            <div className='ContainerTipoPasajero' >
+                                <div className='eleccionCategoriaPasajero'>
+                                    <h3>Niños</h3>
+                                    <div className='botonesCantidadPasajeros'>
+                                        <FaMinus></FaMinus>
+                                        <FaPlus></FaPlus>
+                                    </div>
+                                </div>
+                                <p>Niños debajo de los 14 años (menores acompañados) no pueden viajar solos en HM</p>
+                            </div>
+                            <div className='ContainerTipoPasajero'>
+                                <div className='eleccionCategoriaPasajero'>
+                                    <h3>Bebés</h3>
+                                    <div className='botonesCantidadPasajeros'>
+                                        <FaMinus></FaMinus>
+                                        <FaPlus></FaPlus>
+                                    </div>
+                                </div>
+                                <p>Debajo de los 2 años, deben viajar sentados sobre el tutor responsable.</p>
+                            </div>
+                        </div>
                     </div>
                     <div className='formAbajo'>
                         <div id='DestinoOrigen'>
