@@ -12,7 +12,16 @@ const Navbar = () => {
     const [ formularioCantidadPasajerosVisible, setFormularioCantidadPasajerosVisible ] = useState(false)
 
     const [ tipoDeViaje, setTipoDeViaje ] = useState('Ida y Vuelta')
-    let origenSeleccionado
+
+    // SELECCION DE ORIGENES Y DESTINOS
+    const [ origenSeleccionado, setOrigenSeleccionado ] = useState({Nombre: 'Selecciona el origen', id:''}) 
+    const [ formularioOrigenVisible, setFormularioOrigenVisible ] = useState(false)
+    const [ origenes, setOrigenes ] = useState([])
+    
+    const [ destinoSeleccionado, setDestinoSeleccionado ] = useState({Nombre: '', id:''})
+    const [ formularioDestinoVisible, setFormularioDestinoVisible ] = useState(false)
+    const [ destinos, setDestinos ] = useState([])
+
 
     useEffect(() => {
         let formulario = document.getElementById('FormularioReserva')
@@ -54,29 +63,71 @@ const Navbar = () => {
             tickIda.style.display = 'inline'
             tickIdaVuelta.style.display = 'none'
         }
-    }, [formularioReservaVisible, formularioTipoDeViajeVisible, tipoDeViaje])
-    
-    
+        
+    }, [formularioReservaVisible, formularioTipoDeViajeVisible, tipoDeViaje, formularioOrigenVisible])
+
+    useEffect(() => {
+        console.log('actualizando');
+        console.log(formularioOrigenVisible);
+        
+        
+    }, [formularioOrigenVisible])
 
     useEffect(() => {
         async function getData() {
+            let bodyData= new FormData()
+            bodyData.append('execute', 'getAirportsFrom')
             let token = '4f2a879bd30eb1e8aaa328850c2306b2e376eab11acf6c3bb647772ee6e8a8a9'
             let response = await fetch( "https://hummingairways.xgestion.com.ar/intranet/sys/mods/flights/motor.php", {
                 method: 'POST',
                 headers: {
-                    'Content-Type': 'application/json;charset=utf-8',
                     'Authorization': `Bearer ${token}`
                 },
-                body: {
-                    "execute": "getAirportsFrom"
-                }
+                body: bodyData
             })
             
-            const data  = await response
-            console.log(data);
+            let data = await response.json()
+            let listaAirports = data.AirportsFrom.map(Airport => 
+                <p key={Airport.airportId} onClick={() => setOrigenSeleccionado({Nombre: Airport.airportName, id:Airport.airportId})}>{Airport.airportName}</p>
+                
+            )
+            console.log(listaAirports);
+            
+            setOrigenes(listaAirports)
+            
+            
         }
         getData()
-    })
+    },[])
+
+    useEffect(() => {
+        async function getDestinos() {
+            let bodyData= new FormData()
+            bodyData.append('execute', 'getAirportsTo')
+            bodyData.append('airportFrom', origenSeleccionado.id)
+            let token = '4f2a879bd30eb1e8aaa328850c2306b2e376eab11acf6c3bb647772ee6e8a8a9'
+            let response = await fetch( "https://hummingairways.xgestion.com.ar/intranet/sys/mods/flights/motor.php", {
+                method: 'POST',
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                },
+                body: bodyData
+            })
+            
+            let data = await response.json()
+            console.log(data.AirportsTo);
+            
+            let listaDestinos = Object.keys(data.AirportsTo).map (Airport => {
+                <p key={Airport.airportId} onClick={() => setDestinoSeleccionado(Airport.airportName)}>{Airport.airportName}</p>
+            })
+            console.log(listaDestinos);
+            
+            setDestinos(listaDestinos)
+            
+        }
+        getDestinos()
+        
+    }, [origenSeleccionado])
 
     return (
         <div>
@@ -107,7 +158,7 @@ const Navbar = () => {
                             </div>
                         </div>
                         {/* formulario cantidad de personas */}
-                        <div id='CantidadPersonas'  onClick={() => setFormularioCantidadPasajerosVisible(false)}>
+                        {/* <div id='CantidadPersonas'  onClick={() => setFormularioCantidadPasajerosVisible(false)}>
                             <FaUser />
                             <IoIosArrowUp id='flechaTipo' />
                             <div>
@@ -129,13 +180,27 @@ const Navbar = () => {
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                        </div> */}
                     </div>
                     <div className='formAbajo'>
                         <div id='DestinoOrigen'>
-                            <div id='Origen'>
+                            <div id='Origen' onClick={() => setFormularioOrigenVisible(true)}>
                                 <p>Origen</p>
-                                <h3>{origenSeleccionado}</h3>
+                                <h3>{origenSeleccionado.Nombre} <IoIosArrowUp /></h3>
+                            </div>
+                            <div id='FormularioOrigen' onClick={() => setFormularioOrigenVisible(false)} className={formularioOrigenVisible ? '': 'invisible'}>
+                                <div id='selectOrigen'>
+                                    {origenes}
+                                </div>
+                            </div>
+                            <div id='Destino' onClick={() => setFormularioDestinoVisible(true)}>
+                                <p>Origen</p>
+                                <h3>{destinoSeleccionado.Nombre} <IoIosArrowUp /></h3>
+                            </div>
+                            <div id='FormularioOrigen' onClick={() => setFormularioDestinoVisible(false)} className={formularioDestinoVisible ? '': 'invisible'}>
+                                <div id='selectOrigen'>
+                                    {destinos}
+                                </div>
                             </div>
                         </div>
                     </div>

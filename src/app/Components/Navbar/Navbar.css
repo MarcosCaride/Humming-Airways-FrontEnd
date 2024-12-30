@@ -48,7 +48,7 @@
     #FormularioReserva {
         justify-content: center;
         width: 80%;
-        height: 10%;
+        height: 30%;
         margin: 0 10%;
         background-color: white;
         position: absolute;
@@ -154,6 +154,32 @@
         .Boton2{
             background-color: #ffff;
             color: black;
+        }
+    }
+
+    #DestinoOrigen{
+        color: black; 
+        #FormularioOrigen{
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background-color: rgba(0, 0, 0, .60);
+            z-index: 1000;
+            color: white;
+            #selectOrigen{
+                position: absolute;
+                top: 20.5%;
+                left: 11.5%;
+                padding: 1rem;
+                width: 40%;
+                font-family: 'Open Sans', 'Open Sans Fallback';
+                background-color: white;
+                opacity: 1;
+                color: black;
+            }
+
         }
     }
 }
