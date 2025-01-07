@@ -1,0 +1,35 @@
+.invisible {
+     display: none !important;
+}
+
+#FormularioReserva {
+     justify-content: center;
+     width: 80%;
+     height: 30%;
+     margin: 0 10%;
+     background-color: white;
+     position: absolute;
+     top: 10.4%;
+
+     .formArriba {
+          display: flex;
+          flex-wrap: nowrap;
+          width: 100%;
+          justify-content: flex-start;
+          cursor: pointer;
+          color: black;
+
+          #TipoDeViaje {
+               display: flex;
+               flex-wrap: nowrap;
+               justify-content: space-evenly;
+               align-items: center;
+               width: 15%;
+
+               #opcionTipoDeViaje {
+                    width: 65%;
+               }
+          }
+
+     }
+}
