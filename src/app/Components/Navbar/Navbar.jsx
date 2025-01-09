@@ -5,6 +5,7 @@ import { IoIosMenu, IoIosArrowUp } from "react-icons/io";
 import { FaPlaneDeparture, FaUser } from "react-icons/fa";
 import { FaPlus, FaMinus } from 'react-icons/fa6'
 import { TiTick } from "react-icons/ti";
+import { GoArrowSwitch } from 'react-icons/go'
 
 
 const Navbar = () => {
@@ -281,6 +282,7 @@ const Navbar = () => {
                                     {origenes}
                                 </div>
                             </div>
+                            <GoArrowSwitch className='BttnAzul ArrowsSwitch' /> 
                             <div id='Destino' className='Input Select' onClick={() => setFormularioDestinoVisible(true)}>
                                 <p>Destino</p>
                                 <div className='selectInput'>

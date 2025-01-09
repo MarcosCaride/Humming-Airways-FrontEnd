@@ -54,6 +54,7 @@
         justify-content: center;
         width: 80%;
         height: 30%;
+        padding: 0 2%;
         margin: 0 10%;
         background-color: white;
         position: absolute;
@@ -63,6 +64,7 @@
             display: flex;
             flex-wrap: nowrap;
             width: 100%;
+            margin-bottom: 1rem;
             justify-content: flex-start;
             cursor: pointer;
             color: black;
@@ -216,10 +218,12 @@
     #DestinoOrigen {
         color: black;
         display: flex;
-
+        width: 50%;
+        justify-content: space-between;
+        align-items: center;
         .Select{
             display: block;
-            width: 20%;
+            width: 40%;
             .selectInput{
                 display: flex;
                 flex-wrap: nowrap;
@@ -267,6 +271,10 @@
 
 .BttnAzul{
     color: #2E6BB2;
+}
+
+.ArrowsSwitch{
+    font-size: xx-large;
 }
 
 .spanSelect{
