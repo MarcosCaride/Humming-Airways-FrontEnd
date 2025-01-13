@@ -2,10 +2,14 @@
 import React, { useEffect, useState } from 'react'
 import "./Navbar.css"
 import { IoIosMenu, IoIosArrowUp } from "react-icons/io";
+import { IoCalendarOutline } from "react-icons/io5";
 import { FaPlaneDeparture, FaUser } from "react-icons/fa";
 import { FaPlus, FaMinus } from 'react-icons/fa6'
 import { TiTick } from "react-icons/ti";
 import { GoArrowSwitch } from 'react-icons/go'
+
+
+import DatePicker from './flightForm/DatePicker';
 
 
 const Navbar = () => {
@@ -31,6 +35,36 @@ const Navbar = () => {
     const [formularioDestinoVisible, setFormularioDestinoVisible] = useState(false)
     const [destinos, setDestinos] = useState([])
 
+    // SELECCION DE FECHAS
+
+    const [ vuelos, setVuelos ] = useState()
+
+
+    const [fechaSalida, setFechaSalida] = useState('')
+    const [fechaRegreso, setFechaRegreso] = useState('')
+
+    const [ fechaInicial, setFechaInicial ] = useState()
+    const [ fechaFinal, setFechaFinal ] = useState()
+    const [fechasVuelos, setFechasVuelos] = useState()
+    const [datePickerVisible, setDatePickerVisible] = useState(false)
+
+    const handleDataSalida = (data) => {
+        if (fechaSalida == '') {
+            setFechaSalida(data)
+        } else{
+            if (fechaRegreso == '') {
+                setFechaRegreso(data)
+            }
+        }
+    }
+
+    const handleDataRegreso = (data) => {
+        setFechaRegreso(data)
+    }
+
+    const handleDatePickerVisible = () => {
+        setDatePickerVisible(false)
+    }
 
     const validacionCantidadPasajeros = () => {
         if (cantidadAdultos > 9) {
@@ -90,8 +124,7 @@ const Navbar = () => {
     }, [formularioReservaVisible, formularioTipoDeViajeVisible, tipoDeViaje, formularioOrigenVisible])
 
     useEffect(() => {
-        console.log('actualizando');
-        console.log(formularioOrigenVisible);
+        
 
 
     }, [formularioOrigenVisible])
@@ -114,7 +147,7 @@ const Navbar = () => {
                 <p key={Airport.airportId} className='ListaAirports' onClick={() => setOrigenSeleccionado({ Nombre: Airport.airportName, id: Airport.airportId, code: Airport.airportCode })}>{Airport.airportName} <span className='spanSelect'>{` (${Airport.airportCode})`}</span></p>
 
             )
-            console.log(listaAirports);
+            // console.log(listaAirports);
 
             setOrigenes(listaAirports)
 
@@ -140,17 +173,17 @@ const Navbar = () => {
             })
 
             let data = await response.json()
-            console.log(data.AirportsTo);
-            console.log(Object.values(data.AirportsTo));
+            // console.log(data.AirportsTo);
+            // console.log(Object.values(data.AirportsTo));
             let dataDestinos = Object.values(data.AirportsTo)
-            console.log("DataDestinos");
-            console.log(dataDestinos);
+            // console.log("DataDestinos");
+            // console.log(dataDestinos);
             
 
             let listaDestinos = dataDestinos.map(Airport => 
                 <p key={Airport.airportId} className='ListaAirports' onClick={() => setDestinoSeleccionado({ Nombre: Airport.airportName, id: Airport.airportId, code: Airport.airportCode })}>{Airport.airportName}<span className='spanSelect'>{` (${Airport.airportCode})`}</span></p>
             )
-            console.log(listaDestinos);
+            // console.log(listaDestinos);
 
             setDestinos(listaDestinos)
 
@@ -163,39 +196,41 @@ const Navbar = () => {
 
     // OBTENEMOS LOS VUELOS DISPONIBLES
 
+    async function getVuelos() {
+        let bodyData = new FormData()
+        bodyData.append('execute', 'getFlightDates')
+        bodyData.append('airportFrom', origenSeleccionado.id)
+        bodyData.append('airportTo', destinoSeleccionado.id)
+
+        let token = '4f2a879bd30eb1e8aaa328850c2306b2e376eab11acf6c3bb647772ee6e8a8a9'
+        let response = await fetch("https://hummingairways.xgestion.com.ar/intranet/sys/mods/flights/motor.php", {
+            method: 'POST',
+            headers: {
+                'Authorization': `Bearer ${token}`
+            },
+            body: bodyData
+        })
+
+        let blah =  await response.json()
+        let respuestaVuelos = blah.Flights
+        let respuestaDates = blah.flightDates
+
+        setFechasVuelos(respuestaDates)
+        setFechaInicial(respuestaDates.start)
+        setFechaFinal(respuestaDates.end)
+
+        setVuelos(respuestaVuelos)
+        // console.log("Respuesta");
+        // console.log(blah);
+        // console.log("SetVuelos");
+        // console.log(vuelos);
+
+    }
+
     useEffect(() => {
-        async function getVuelos() {
-            let bodyData = new FormData()
-            bodyData.append('execute', 'getFlightDates')
-            bodyData.append('airportFrom', origenSeleccionado.id)
-            bodyData.append('airportTo', destinoSeleccionado.id)
-
-            let token = '4f2a879bd30eb1e8aaa328850c2306b2e376eab11acf6c3bb647772ee6e8a8a9'
-            let response = await fetch("https://hummingairways.xgestion.com.ar/intranet/sys/mods/flights/motor.php", {
-                method: 'POST',
-                headers: {
-                    'Authorization': `Bearer ${token}`
-                },
-                body: bodyData
-            })
-
-            // let data = await response.json()
-            // console.log(data.AirportsTo);
-            // console.log(Object.values(data.AirportsTo));
-            // let dataDestinos = Object.values(data.AirportsTo)
-            // console.log("DataDestinos");
-            // console.log(dataDestinos);
-            
-
-            // let listaDestinos = dataDestinos.map(Airport => 
-            //     <p key={Airport.airportId} className='ListaAirports' onClick={() => setDestinoSeleccionado({ Nombre: Airport.airportName, id: Airport.airportId, code: Airport.airportCode })}>{Airport.airportName}<span className='spanSelect'>{` (${Airport.airportCode})`}</span></p>
-            // )
-            // console.log(listaDestinos);
-
-            // setDestinos(listaDestinos)
-
-        }
+        
         getVuelos()
+        
     }, [destinoSeleccionado])
 
     return (
@@ -304,6 +339,47 @@ const Navbar = () => {
                                 </div>
                             </div>
                         </div>
+
+                        {/* Menu Botones de  */}
+
+                        <div id='BotonesDeFecha'>
+                            <button className='fechaBoton' onClick={() => setDatePickerVisible(true)}>
+                                {fechaSalida != '' ? (
+                                    <p>{fechaSalida}</p>
+                                    
+                                ) : (
+                                    <p>Fecha De Salida</p>
+                                )
+                                }
+                                <IoCalendarOutline />
+                            </button>
+                            <button className='fechaBoton' onClick={() => setDatePickerVisible(true)}>
+                                {fechaRegreso != '' ? (
+                                    <p>{fechaRegreso}</p>
+                                ) : (
+                                    <p>Fecha De Regreso</p>
+                                )
+                                }
+                                <IoCalendarOutline />
+                            </button>
+                            <button className='fechaBoton' onClick={() => {
+                                setFechaRegreso('')
+                                setFechaSalida('')
+                            }}>
+                                Clear
+                            </button>
+                        </div>
+
+                        {/* Menu DatePicker */}
+
+                        <div className={datePickerVisible ? '' : 'invisible'}>
+                            <div className='DatePicker'>
+                                <DatePicker handleDataRegreso={handleDataRegreso} handleDataSalida={handleDataSalida} datePickerVisible={handleDatePickerVisible} vuelos={vuelos} fechasVuelos={fechasVuelos} fechaSalida={fechaInicial} fechaRegreso={fechaFinal} />
+                            </div>
+                        </div>
+
+                        <button>Buscar</button>
+
                     </div>
                 </div>
 
